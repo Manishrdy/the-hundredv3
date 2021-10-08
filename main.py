@@ -168,12 +168,12 @@ def prepInnings2(team1, team2, target):
     team1BattingRatings = team1Data[['0s','1s','2s','3s','4s','6s','out','wide','leg bye','no ball']]
     team1BattingRatings = team1BattingRatings.values.tolist()
     
-    team2Bowlers = team2Data[team1Data['role'] == 'Bowler']
+    team2Bowlers = team2Data[team2Data['role'] == 'Bowler']
     team2Bowlers = team2Bowlers[['player','bowling_action','bowling_points']]
     team2Bowlers = team2Bowlers.values.tolist()
     for i in team2Bowlers:
         i.extend([0])
-    
+    print(team2Bowlers)
     initialBalls = 0
     
     initialScore = 0
@@ -1292,11 +1292,13 @@ def prepInnings(team1, team2):
     team1BattingRatings = team1Data[['0s','1s','2s','3s','4s','6s','out','wide','leg bye','no ball']]
     team1BattingRatings = team1BattingRatings.values.tolist()
     
-    team2Bowlers = team2Data[team1Data['role'] == 'Bowler']
+    team2Bowlers = team2Data[team2Data['role'] == 'Bowler']
     team2Bowlers = team2Bowlers[['player','bowling_action','bowling_points']]
     team2Bowlers = team2Bowlers.values.tolist()
     for i in team2Bowlers:
         i.extend([0])
+    
+    print(team2Bowlers)
     
     initialBalls = 0
     
