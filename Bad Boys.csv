@@ -1,0 +1,12 @@
+﻿player,role,type,0s,1s,2s,3s,4s,6s,out,wide,leg bye,no ball,total,bowling_action,bowling_points
+C Swift,Batsman,left,40,30,10,10,10,7,3,2,3,3,88,spin,0
+L Modi,Keeper,right,40,30,10,10,10,7,3,2,3,3,72,spin,0
+U Nazim,Batsman,right,40,35,10,10,10,5,3,2,3,3,67,spin,0
+Parth K,Batsman,right,40,35,10,10,8,5,3,2,3,3,74,spin,0
+Muller S,Bowler,medium,40,20,20,10,6,5,4,2,3,3,79,fast,65
+RUDI S,Bowler,medium,40,20,20,10,6,5,4,2,3,3,80,fast,65
+M Genius,Batsman,right,40,25,10,10,6,4,6,2,3,3,78,spin,0
+K Biswas,Bowler,spin,40,25,10,10,5,4,10,2,3,3,78,spin,80
+F Rukanah,Bowler,medium,40,25,10,10,5,3,10,2,3,3,93,fast,70
+F Jaacob,Bowler,fast,40,25,10,10,5,3,10,2,3,3,89,fast,80
+Naman,Bowler,medium,40,25,10,10,5,3,10,2,3,3,89,spin,80
