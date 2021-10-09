@@ -198,6 +198,8 @@ def prepInnings2(team1, team2, target):
     offStrikeFours = 0
     offStrikeSixes = 0
     
+    drs = 2
+    
     checkBowlers = []
     
     onStrike = team1BattingPlayers[0]
@@ -631,6 +633,7 @@ def prepInnings2(team1, team2, target):
             
             outType = random.choices(outList, weights=(0.3,4,5,0.6,0.1,4.5), k=1)
             cPlayer = random.choice(fielders)
+            
             if outType == ['Caught']:
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,cPlayer,random.choice(outComm).replace('batsman', onStrike)))
                 print()
@@ -654,6 +657,16 @@ def prepInnings2(team1, team2, target):
                 print()
                 print('The new batsman is {}'.format(onStrike))
                 
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes
+                
             elif outType == ['Bowled']:
                 print('Ball {} - {} to {}, {}, {}'.format(ball,bowlerPresent,onStrike,*outType,random.choice(outComm).replace('batsman', onStrike)))
                 print()
@@ -675,6 +688,17 @@ def prepInnings2(team1, team2, target):
                 onStrikeRuns = 0
                 onStrikeSixes = 0
                 print('The new batsman is {}'.format(onStrike))
+                
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes
+                    
             elif outType == ['Stumped']:
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,*keeper,random.choice(outComm).replace('batsman', onStrike)))
                 print()
@@ -696,6 +720,17 @@ def prepInnings2(team1, team2, target):
                 onStrikeRuns = 0
                 onStrikeSixes = 0
                 print('The new batsman is {}'.format(onStrike))
+                
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes
+                    
             elif outType == ['Run Out']:
                 initialWickets = initialWickets - 1
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,cPlayer,random.choice(outComm).replace('batsman', onStrike)))
@@ -718,6 +753,17 @@ def prepInnings2(team1, team2, target):
                 onStrikeRuns = 0
                 onStrikeSixes = 0
                 print('The new batsman is {}'.format(onStrike))
+                
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes
+                    
             elif outType == ['Hit Wicket']:
                 print('Ball {} - {} to {}, {}, {}'.format(ball,bowlerPresent,onStrike,*outType,random.choice(outComm).replace('batsman', onStrike)))
                 print()
@@ -739,27 +785,106 @@ def prepInnings2(team1, team2, target):
                 onStrikeRuns = 0
                 onStrikeSixes = 0
                 print('The new batsman is {}'.format(onStrike))
+                
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes
+                
             elif outType == ['Lbw']:
                 print('Ball {} - {} to {}, {}, {}'.format(ball,bowlerPresent,onStrike,*outType,random.choice(outComm).replace('batsman', onStrike)))
                 print()
-                print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
-                print()
-                sr = (onStrikeRuns * 100) // onStrikeBalls
-                oneIngBat.append([onStrike, 'lbw. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
-               onStrikeFours, onStrikeSixes, sr])
-                if totalWickets == 10:
-                    sr = (offStrikeRuns * 100) // offStrikeBalls
-                    oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
-               offStrikeFours, offStrikeSixes, sr])
-                    break
+                
+                
+                review = ['yes','no']
+                reviewYN = random.choices(review, weights=(0.60,0.40), k=1)
+                
+                if drs == 2 or drs == 1:
+                    reviewYN == ['yes']
                 else:
-                    onStrike = team1BattingPlayers[totalWickets+1]
-                    onStrikeRating = team1BattingRatings[totalWickets+1]
-                onStrikeBalls = 0
-                onStrikeFours = 0
-                onStrikeRuns = 0
-                onStrikeSixes = 0
-                print('The new batsman is {}'.format(onStrike))
+                    reviewYN == ['no']
+                
+                if reviewYN == ['yes']:
+                    print('Reviews available for team {} - {}'.format(team1,drs))
+                    print('{} goes for a review...'.format(onStrike))
+                    print('The umpire signals to the third umpire.')
+                    print('full credit to {} for taking pace off. {} played for normal pace and fell over slightly trying the flick, the ball came slow and the impact was in line with leg stump.'.format(bowlerPresent,onStrike))
+                        
+                    umpireDecision = ['out','not out']
+                    umpireNO = random.choices(umpireDecision, weights=(0.60,0.40), k=1)
+                    if umpireNO == ['out']:
+                        
+                        drs = drs - 1
+                        
+                        print('The umpire gives OUT ! {} departs.'.format(onStrike))
+                        print()
+                        print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                        print()
+                        sr = (onStrikeRuns * 100) // onStrikeBalls
+                        oneIngBat.append([onStrike, 'lbw. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
+                       onStrikeFours, onStrikeSixes, sr])
+                        if totalWickets == 10:
+                            sr = (offStrikeRuns * 100) // offStrikeBalls
+                            oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
+                       offStrikeFours, offStrikeSixes, sr])
+                            break
+                        else:
+                            onStrike = team1BattingPlayers[totalWickets+1]
+                            onStrikeRating = team1BattingRatings[totalWickets+1]
+                            
+                        onStrikeBalls = 0
+                        onStrikeFours = 0
+                        onStrikeRuns = 0
+                        onStrikeSixes = 0
+                        print('The new batsman is {}'.format(onStrike))
+                        
+                    elif umpireNO == ['not out']:
+                        print('The umpire gives NOT OUT ! and the review remains !!!')
+                        print()
+                        initialBalls = initialBalls + 1
+
+                        initialDots = initialDots + 1
+                        totalDots = totalDots + 1
+                        initialScore = initialScore + 0
+                        totalScore = totalScore + 0
+                        
+                        onStrikeRuns = onStrikeRuns + 0
+                        onStrikeBalls = onStrikeBalls + 1
+                    
+                elif reviewYN == ['no']:
+                    print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                    print()
+                    sr = (onStrikeRuns * 100) // onStrikeBalls
+                    oneIngBat.append([onStrike, 'lbw. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
+                   onStrikeFours, onStrikeSixes, sr])
+                    if totalWickets == 10:
+                        sr = (offStrikeRuns * 100) // offStrikeBalls
+                        oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
+                   offStrikeFours, offStrikeSixes, sr])
+                        break
+                    else:
+                        onStrike = team1BattingPlayers[totalWickets+1]
+                        onStrikeRating = team1BattingRatings[totalWickets+1]
+                    onStrikeBalls = 0
+                    onStrikeFours = 0
+                    onStrikeRuns = 0
+                    onStrikeSixes = 0
+                    print('The new batsman is {}'.format(onStrike))
+                
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes  
             
             
         elif ballOutCome == ['Wide']:
@@ -1324,6 +1449,8 @@ def prepInnings(team1, team2):
     offStrikeFours = 0
     offStrikeSixes = 0
     
+    drs = 2
+    
     checkBowlers = []
     
     onStrike = team1BattingPlayers[0]
@@ -1757,6 +1884,7 @@ def prepInnings(team1, team2):
             
             outType = random.choices(outList, weights=(0.3,4,5,0.6,0.1,4.5), k=1)
             cPlayer = random.choice(fielders)
+            
             if outType == ['Caught']:
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,cPlayer,random.choice(outComm).replace('batsman', onStrike)))
                 print()
@@ -1780,6 +1908,16 @@ def prepInnings(team1, team2):
                 print()
                 print('The new batsman is {}'.format(onStrike))
                 
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes 
+                
             elif outType == ['Bowled']:
                 print('Ball {} - {} to {}, {}, {}'.format(ball,bowlerPresent,onStrike,*outType,random.choice(outComm).replace('batsman', onStrike)))
                 print()
@@ -1801,6 +1939,17 @@ def prepInnings(team1, team2):
                 onStrikeRuns = 0
                 onStrikeSixes = 0
                 print('The new batsman is {}'.format(onStrike))
+                
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes 
+                    
             elif outType == ['Stumped']:
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,*keeper,random.choice(outComm).replace('batsman', onStrike)))
                 print()
@@ -1822,6 +1971,17 @@ def prepInnings(team1, team2):
                 onStrikeRuns = 0
                 onStrikeSixes = 0
                 print('The new batsman is {}'.format(onStrike))
+                
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes 
+                    
             elif outType == ['Run Out']:
                 initialWickets = initialWickets - 1
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,cPlayer,random.choice(outComm).replace('batsman', onStrike)))
@@ -1844,6 +2004,17 @@ def prepInnings(team1, team2):
                 onStrikeRuns = 0
                 onStrikeSixes = 0
                 print('The new batsman is {}'.format(onStrike))
+                
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes 
+                    
             elif outType == ['Hit Wicket']:
                 print('Ball {} - {} to {}, {}, {}'.format(ball,bowlerPresent,onStrike,*outType,random.choice(outComm).replace('batsman', onStrike)))
                 print()
@@ -1865,27 +2036,106 @@ def prepInnings(team1, team2):
                 onStrikeRuns = 0
                 onStrikeSixes = 0
                 print('The new batsman is {}'.format(onStrike))
+                
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes 
+                    
             elif outType == ['Lbw']:
                 print('Ball {} - {} to {}, {}, {}'.format(ball,bowlerPresent,onStrike,*outType,random.choice(outComm).replace('batsman', onStrike)))
                 print()
-                print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
-                print()
-                sr = (onStrikeRuns * 100) // onStrikeBalls
-                oneIngBat.append([onStrike, 'lbw. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
-               onStrikeFours, onStrikeSixes, sr])
-                if totalWickets == 10:
-                    sr = (offStrikeRuns * 100) // offStrikeBalls
-                    oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
-               offStrikeFours, offStrikeSixes, sr])
-                    break
+                
+                
+                review = ['yes','no']
+                reviewYN = random.choices(review, weights=(0.60,0.40), k=1)
+                
+                if drs == 2 or drs == 1:
+                    reviewYN == ['yes']
                 else:
-                    onStrike = team1BattingPlayers[totalWickets+1]
-                    onStrikeRating = team1BattingRatings[totalWickets+1]
-                onStrikeBalls = 0
-                onStrikeFours = 0
-                onStrikeRuns = 0
-                onStrikeSixes = 0
-                print('The new batsman is {}'.format(onStrike))
+                    reviewYN == ['no']
+                
+                if reviewYN == ['yes']:
+                    print('Reviews available for team {} - {}'.format(team1,drs))
+                    print('{} goes for a review...'.format(onStrike))
+                    print('The umpire signals to the third umpire.')
+                    print('full credit to {} for taking pace off. {} played for normal pace and fell over slightly trying the flick, the ball came slow and the impact was in line with leg stump.'.format(bowlerPresent,onStrike))
+                        
+                    umpireDecision = ['out','not out']
+                    umpireNO = random.choices(umpireDecision, weights=(0.60,0.40), k=1)
+                    if umpireNO == ['out']:
+                        
+                        drs = drs - 1
+                        
+                        print('The umpire gives OUT ! {} departs.'.format(onStrike))
+                        print()
+                        print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                        print()
+                        sr = (onStrikeRuns * 100) // onStrikeBalls
+                        oneIngBat.append([onStrike, 'lbw. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
+                       onStrikeFours, onStrikeSixes, sr])
+                        if totalWickets == 10:
+                            sr = (offStrikeRuns * 100) // offStrikeBalls
+                            oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
+                       offStrikeFours, offStrikeSixes, sr])
+                            break
+                        else:
+                            onStrike = team1BattingPlayers[totalWickets+1]
+                            onStrikeRating = team1BattingRatings[totalWickets+1]
+                            
+                        onStrikeBalls = 0
+                        onStrikeFours = 0
+                        onStrikeRuns = 0
+                        onStrikeSixes = 0
+                        print('The new batsman is {}'.format(onStrike))
+                        
+                    elif umpireNO == ['not out']:
+                        print('The umpire gives NOT OUT ! and the review remains !!!')
+                        print()
+                        initialBalls = initialBalls + 1
+
+                        initialDots = initialDots + 1
+                        totalDots = totalDots + 1
+                        initialScore = initialScore + 0
+                        totalScore = totalScore + 0
+                        
+                        onStrikeRuns = onStrikeRuns + 0
+                        onStrikeBalls = onStrikeBalls + 1
+                    
+                elif reviewYN == ['no']:
+                    print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                    print()
+                    sr = (onStrikeRuns * 100) // onStrikeBalls
+                    oneIngBat.append([onStrike, 'lbw. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
+                   onStrikeFours, onStrikeSixes, sr])
+                    if totalWickets == 10:
+                        sr = (offStrikeRuns * 100) // offStrikeBalls
+                        oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
+                   offStrikeFours, offStrikeSixes, sr])
+                        break
+                    else:
+                        onStrike = team1BattingPlayers[totalWickets+1]
+                        onStrikeRating = team1BattingRatings[totalWickets+1]
+                    onStrikeBalls = 0
+                    onStrikeFours = 0
+                    onStrikeRuns = 0
+                    onStrikeSixes = 0
+                    print('The new batsman is {}'.format(onStrike))
+                
+                if ball % 10 == 0:
+                    onStrike, offStrike = offStrike, onStrike
+                    onStrikeRating, offStrikeRating = offStrikeRating, onStrikeRating
+                    
+                    onStrikeRuns, offStrikeRuns = offStrikeRuns, onStrikeRuns
+                    onStrikeBalls, offStrikeBalls = offStrikeBalls, onStrikeBalls
+                    
+                    onStrikeFours, offStrikeFours = offStrikeFours, onStrikeFours
+                    onStrikeSixes, offStrikeSixes = offStrikeSixes, onStrikeSixes   
             
             
         elif ballOutCome == ['Wide']:
