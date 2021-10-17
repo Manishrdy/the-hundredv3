@@ -182,7 +182,7 @@ def prepInnings2(team1, team2, target):
     team2Bowlers = team2Bowlers.values.tolist()
     for i in team2Bowlers:
         i.extend([0])
-    print(team2Bowlers)
+
     initialBalls = 0
     
     initialScore = 0
@@ -220,8 +220,28 @@ def prepInnings2(team1, team2, target):
     team2Bowlers = sorted(team2Bowlers,key=lambda x: x[2], reverse=True)
     team2Bowlers = sorted(team2Bowlers,key=lambda x: x[1])
 
-    bowlerPresent = team2Bowlers[0][0]
-    bowlerPresentR = team2Bowlers[0][2]
+    for i in range(len(team2Bowlers)):
+        print('{} -> {}'.format(i+1, team2Bowlers[i][0]))
+    print()
+    
+    print('Choose bowler index -> ')
+        
+    while True:
+        try:
+            bowlerPresent = int(input())
+        except ValueError:
+            print("Sorry, I didn't understand that.")
+            continue
+        if bowlerPresent not in range(1,len(team2Bowlers)+1):
+            print("Sorry, please select a valid index.")
+            continue
+        else:
+            break
+    
+    
+    bowlerPresent = team2Bowlers[bowlerPresent - 1]
+    bowlerPresent = bowlerPresent[0]
+    bowlerPresentR = team2Bowlers[2]
     checkBowlers.append(bowlerPresent)
     
     keeper = team2Data[team2Data['role'] == 'Keeper']['player']
@@ -230,8 +250,32 @@ def prepInnings2(team1, team2, target):
     for i in team2Bowlers:
         oneIngBowl.append([i[0],0,0,0,0,0,0])
 
-    def changeBowler(initialBalls):
-        changeB = random.choice(team2Bowlers)
+    def changeBowler(initialBalls, team2Bowlers, oneIngBat):
+        
+        dfN = pd.DataFrame(oneIngBowl,columns=['Bowler','Balls','Dots','Runs','Wickets','Economy','Extras'])
+        print(tabulate(dfN, showindex=False, headers=dfN.columns))
+
+        print()
+        
+        for i in range(len(team2Bowlers)):
+            print('{} -> {}'.format(i+1,team2Bowlers[i][0]))
+        
+        print('Choose bowler index -> ')
+        
+        while True:
+            try:
+                changeB = int(input())
+            except ValueError:
+                print("Sorry, I didn't understand that.")
+                continue
+            if changeB not in range(1,len(team2Bowlers)+1):
+                print("Sorry, please select a valid index.")
+                continue
+            else:
+                break
+            
+        changeB = team2Bowlers[changeB - 1]
+        
         bIndex = team2Bowlers.index(changeB)
         if changeB[0] != checkBowlers[-1] and team2Bowlers[bIndex][3] < 20:
             if initialBalls == 5:
@@ -241,8 +285,11 @@ def prepInnings2(team1, team2, target):
                 if team2Bowlers[bIndex][3] == 0 or team2Bowlers[bIndex][3] == 5 or team2Bowlers[bIndex][3] == 10:
                     return changeB
                 elif team2Bowlers[bIndex][3] == 15:
-                    return changeBowler(initialBalls)
-        return changeBowler(initialBalls)
+                    print('Please select a valid bowler.')
+                    return changeBowler(initialBalls, team2Bowlers, oneIngBat)
+                
+        print('Please select a valid bowler.')
+        return changeBowler(initialBalls, team2Bowlers, oneIngBat)
     
     print('The new batsman is {}'.format(onStrike))
     print('The new batsman is {}'.format(offStrike))
@@ -832,10 +879,11 @@ def prepInnings2(team1, team2, target):
                     print('Reviews available for team {} - {}'.format(team1,drs))
                     print('{} goes for a review...'.format(onStrike))
                     print('The umpire signals to the third umpire.')
-    
+                       
                     umpireDecision = ['out','not out']
                     umpireNO = random.choices(umpireDecision, weights=(0.60,0.40), k=1)
                     if umpireNO == ['out']:
+                        
                         initialWickets = initialWickets + 1
                         totalWickets = totalWickets + 1
                         
@@ -866,7 +914,7 @@ def prepInnings2(team1, team2, target):
                     elif umpireNO == ['not out']:
                         print('The umpire gives NOT OUT ! and the review remains !!!')
                         print()
-                        initialBalls = initialBalls + 1
+                        initialBalls = initialBalls + 0
 
                         initialDots = initialDots + 1
                         totalDots = totalDots + 1
@@ -874,7 +922,7 @@ def prepInnings2(team1, team2, target):
                         totalScore = totalScore + 0
                         
                         onStrikeRuns = onStrikeRuns + 0
-                        onStrikeBalls = onStrikeBalls + 1
+                        onStrikeBalls = onStrikeBalls + 0
                     
                 elif reviewYN == ['no']:
                     initialWickets = initialWickets + 1
@@ -1226,13 +1274,28 @@ def prepInnings2(team1, team2, target):
                     onStrikeFours, offStrikeFours = onStrikeFours, offStrikeFours
                     onStrikeSixes, offStrikeSixes = onStrikeSixes, offStrikeSixes
         
-        if ball % 5 == 0 and ball % 10 != 0:
+        if ball % 5 == 0 and ball % 10 != 0 and ball != 100:
 
             chance = ['no','yes']
-            chB = random.choices(chance, weights=(0.75,0.25), k=1)
-            if chB == ['no']:
+            print()
+            
+            while True:
+                try:
+                    print('Change of bowler 5 balls (yes or no) -> ')
+                    chB = input()
+                    print()
+                except ValueError:
+                    print("Sorry, I didn't understand that.")
+                    continue
+                if chB != 'yes' and chB != 'no':
+                    print("Sorry, your response must be yes or no.")
+                    continue
+                else:
+                    break
+            
+            if chB == 'no':
                 pass
-            elif chB == ['yes']:
+            elif chB == 'yes':
                 for i in oneIngBowl:
                     if bowlerPresent == i[0]:
                         bSIndex = oneIngBowl.index(i)
@@ -1251,7 +1314,9 @@ def prepInnings2(team1, team2, target):
                 print()
                 print('     End of {} balls - {} runs'.format(initialBalls,initialScore))
                 print('     {}     {}-{}'.format(team1,totalScore,totalWickets))
-                rr = totalScore / ball
+                
+                fBall = ball / 5
+                rr = totalScore / fBall
                 rrr = (target - totalScore) / (100-ball)
                 print('     RR - {}     RRR- {}'.format(round(rr,2),round(rrr,2)))
                 print()
@@ -1264,7 +1329,8 @@ def prepInnings2(team1, team2, target):
                 
                 flag = True
                 checkBowlers.append(bowlerPresent)
-                changeB = changeBowler(5)
+                
+                changeB = changeBowler(5, team2Bowlers, oneIngBowl)
                 
                 initialBalls = 0
                 initialDots = 0
@@ -1294,11 +1360,13 @@ def prepInnings2(team1, team2, target):
             print()
             print('     End of {} balls - {} runs'.format(initialBalls,initialScore))
             print('     {}     {}-{}'.format(team1,totalScore,totalWickets))
-            rr = totalScore / ball
+            
+            fBall = ball / 5
+            rr = totalScore / fBall
             if ball == 100:
                 rrr = 0
             else:
-                rrr = (target - totalScore) / (100-ball)
+                rrr = (target - totalScore) / (100-fBall)
                 
             print('     RR - {}     RRR - {}'.format(round(rr,2),round(rrr,2)))
             print()
@@ -1319,7 +1387,8 @@ def prepInnings2(team1, team2, target):
                         team2Bowlers[bIndex][3] = team2Bowlers[bIndex][3] + 10
             
             checkBowlers.append(bowlerPresent)
-            changeB = changeBowler(10)
+            if ball != 100:
+                changeB = changeBowler(10, team2Bowlers, oneIngBowl)
             
             initialBalls = 0
             initialDots = 0
@@ -1342,10 +1411,7 @@ def prepInnings2(team1, team2, target):
                     sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'Not Out','', '', onStrikeRuns, onStrikeBalls, 
                onStrikeFours, onStrikeSixes, sr])
-                if ball == 100 and ballOutCome == ['Out']:
-                    offStrikeBalls = 1
-                else:
-                    sr = (offStrikeRuns * 100) // offStrikeBalls
+                sr = (offStrikeRuns * 100) // offStrikeBalls
                 oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
             offStrikeFours, offStrikeSixes, sr])
         
@@ -1379,29 +1445,8 @@ def prepInnings2(team1, team2, target):
                 print('     {}     {}-{}-{}-{}'.format(bowlerPresent, oneIngBowl[bSIndex][1], oneIngBowl[bSIndex][2], oneIngBowl[bSIndex][3], oneIngBowl[bSIndex][4]))
                 print()
                 
-            if totalWickets == 10 and ball != 100:
-                print()
-                print('     End of innings')
-                print('     End of {} balls - {} runs'.format(initialBalls,initialScore))
-                print('     {}     {}-{}'.format(team1,totalScore,totalWickets))
-                print()
-                print('     {}     ({}){}  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
-                                                                offStrikeBalls,offStrikeFours,offStrikeSixes))
-                print('     {}     {}-{}-{}-{}'.format(bowlerPresent, oneIngBowl[bSIndex][1], oneIngBowl[bSIndex][2], oneIngBowl[bSIndex][3], oneIngBowl[bSIndex][4]))
-                print()
-                
+            
             break
-        
-        if totalWickets == 10 and ball != 100:
-                print()
-                print('     End of innings')
-                print('     End of {} balls - {} runs'.format(initialBalls,initialScore))
-                print('     {}     {}-{}'.format(team1,totalScore,totalWickets))
-                print()
-                print('     {}     ({}){}  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
-                                                                offStrikeBalls,offStrikeFours,offStrikeSixes))
-                print('     {}     {}-{}-{}-{}'.format(bowlerPresent, oneIngBowl[bSIndex][1], oneIngBowl[bSIndex][2], oneIngBowl[bSIndex][3], oneIngBowl[bSIndex][4]))
-                print()
         
     print('{} 2nd Innings'.format(team1))
     
@@ -1418,7 +1463,8 @@ def prepInnings2(team1, team2, target):
     dnb = df['Batsman'].to_list()
     dnb = list(set(team1BattingPlayers) - set(dnb))
     print()
-    rr = totalScore / ball
+    fBall = ball / 5
+    rr = totalScore / fBall
     print('   Total:   {}/{}        Balls: {}        Run Rate: {}        Extras: {}'.format(totalScore,totalWickets,ball,round(rr,2),totalExtras))
     print()
     if len(dnb) == 0:
@@ -1434,6 +1480,7 @@ def prepInnings2(team1, team2, target):
     print('{} Bowling Scoreboard'.format(team2))
     print()
     df1 = pd.DataFrame(oneIngBowl,columns=['Bowler','Balls','Dots','Runs','Wickets','Economy','Extras'])
+    df1['Economy'] = df1['Runs'] / (df1['Balls'] / 5)
     print(tabulate(df1, showindex=False, headers=df1.columns))
     print()
     print('   Total:   {}/{}        Balls: {}        Run Rate: {}        Extras: {}'.format(totalScore,totalWickets,ball,round(rr,2),totalExtras))
@@ -1469,7 +1516,6 @@ def prepInnings(team1, team2):
     for i in team2Bowlers:
         i.extend([0])
     
-    print(team2Bowlers)
     
     initialBalls = 0
     
@@ -1508,8 +1554,28 @@ def prepInnings(team1, team2):
     team2Bowlers = sorted(team2Bowlers,key=lambda x: x[2], reverse=True)
     team2Bowlers = sorted(team2Bowlers,key=lambda x: x[1])
 
-    bowlerPresent = team2Bowlers[0][0]
-    bowlerPresentR = team2Bowlers[0][2]
+    for i in range(len(team2Bowlers)):
+        print('{} -> {}'.format(i+1, team2Bowlers[i][0]))
+    print()
+    
+    print('Choose bowler index -> ')
+        
+    while True:
+        try:
+            bowlerPresent = int(input())
+        except ValueError:
+            print("Sorry, I didn't understand that.")
+            continue
+        if bowlerPresent not in range(1,len(team2Bowlers)+1):
+            print("Sorry, please select a valid index.")
+            continue
+        else:
+            break
+    
+    
+    bowlerPresent = team2Bowlers[bowlerPresent - 1]
+    bowlerPresent = bowlerPresent[0]
+    bowlerPresentR = team2Bowlers[2]
     checkBowlers.append(bowlerPresent)
     
     keeper = team2Data[team2Data['role'] == 'Keeper']['player']
@@ -1518,8 +1584,32 @@ def prepInnings(team1, team2):
     for i in team2Bowlers:
         oneIngBowl.append([i[0],0,0,0,0,0,0])
 
-    def changeBowler(initialBalls):
-        changeB = random.choice(team2Bowlers)
+    def changeBowler(initialBalls, team2Bowlers, oneIngBat):
+        
+        dfN = pd.DataFrame(oneIngBowl,columns=['Bowler','Balls','Dots','Runs','Wickets','Economy','Extras'])
+        print(tabulate(dfN, showindex=False, headers=dfN.columns))
+
+        print()
+        
+        for i in range(len(team2Bowlers)):
+            print('{} -> {}'.format(i+1,team2Bowlers[i][0]))
+        
+        print('Choose bowler index -> ')
+        
+        while True:
+            try:
+                changeB = int(input())
+            except ValueError:
+                print("Sorry, I didn't understand that.")
+                continue
+            if changeB not in range(1,len(team2Bowlers)+1):
+                print("Sorry, please select a valid index.")
+                continue
+            else:
+                break
+        
+        changeB = team2Bowlers[changeB - 1]
+        
         bIndex = team2Bowlers.index(changeB)
         if changeB[0] != checkBowlers[-1] and team2Bowlers[bIndex][3] < 20:
             if initialBalls == 5:
@@ -1529,8 +1619,11 @@ def prepInnings(team1, team2):
                 if team2Bowlers[bIndex][3] == 0 or team2Bowlers[bIndex][3] == 5 or team2Bowlers[bIndex][3] == 10:
                     return changeB
                 elif team2Bowlers[bIndex][3] == 15:
-                    return changeBowler(initialBalls)
-        return changeBowler(initialBalls)
+                    print('Please select a valid bowler.')
+                    return changeBowler(initialBalls, team2Bowlers, oneIngBat)
+                
+        print('Please select a valid bowler.')
+        return changeBowler(initialBalls, team2Bowlers, oneIngBat)
     
     print('The new batsman is {}'.format(onStrike))
     print('The new batsman is {}'.format(offStrike))
@@ -2120,12 +2213,14 @@ def prepInnings(team1, team2):
                     print('Reviews available for team {} - {}'.format(team1,drs))
                     print('{} goes for a review...'.format(onStrike))
                     print('The umpire signals to the third umpire.')
-  
+                     
                     umpireDecision = ['out','not out']
                     umpireNO = random.choices(umpireDecision, weights=(0.60,0.40), k=1)
                     if umpireNO == ['out']:
+                        
                         initialWickets = initialWickets + 1
                         totalWickets = totalWickets + 1
+                        
                         drs = drs - 1
                         
                         print('The umpire gives OUT ! {} departs.'.format(onStrike))
@@ -2153,7 +2248,7 @@ def prepInnings(team1, team2):
                     elif umpireNO == ['not out']:
                         print('The umpire gives NOT OUT ! and the review remains !!!')
                         print()
-                        initialBalls = initialBalls + 1
+                        initialBalls = initialBalls + 0
 
                         initialDots = initialDots + 1
                         totalDots = totalDots + 1
@@ -2161,7 +2256,7 @@ def prepInnings(team1, team2):
                         totalScore = totalScore + 0
                         
                         onStrikeRuns = onStrikeRuns + 0
-                        onStrikeBalls = onStrikeBalls + 1
+                        onStrikeBalls = onStrikeBalls + 0
                     
                 elif reviewYN == ['no']:
                     initialWickets = initialWickets + 1
@@ -2513,13 +2608,28 @@ def prepInnings(team1, team2):
                     onStrikeFours, offStrikeFours = onStrikeFours, offStrikeFours
                     onStrikeSixes, offStrikeSixes = onStrikeSixes, offStrikeSixes
         
-        if ball % 5 == 0 and ball % 10 != 0:
+        if ball % 5 == 0 and ball % 10 != 0 and ball != 100:
 
             chance = ['no','yes']
-            chB = random.choices(chance, weights=(0.75,0.25), k=1)
-            if chB == ['no']:
+            print()
+            
+            while True:
+                try:
+                    print('Change of bowler 5 balls (yes or no) -> ')
+                    chB = input()
+                    print()
+                except ValueError:
+                    print("Sorry, I didn't understand that.")
+                    continue
+                if chB != 'yes' and chB != 'no':
+                    print("Sorry, your response must be yes or no.")
+                    continue
+                else:
+                    break
+            
+            if chB == 'no':
                 pass
-            elif chB == ['yes']:
+            elif chB == 'yes':
                 for i in oneIngBowl:
                     if bowlerPresent == i[0]:
                         bSIndex = oneIngBowl.index(i)
@@ -2538,7 +2648,9 @@ def prepInnings(team1, team2):
                 print()
                 print('     End of {} balls - {} runs'.format(initialBalls,initialScore))
                 print('     {}     {}-{}'.format(team1,totalScore,totalWickets))
-                rr = totalScore / ball
+                
+                fBall = ball / 5
+                rr = totalScore / fBall
                 print('     RR - {}'.format(round(rr,2)))
                 print()
                 print('     {}     ({}){}  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
@@ -2550,7 +2662,7 @@ def prepInnings(team1, team2):
                 
                 flag = True
                 checkBowlers.append(bowlerPresent)
-                changeB = changeBowler(5)
+                changeB = changeBowler(5, team2Bowlers, oneIngBowl)
                 
                 initialBalls = 0
                 initialDots = 0
@@ -2580,7 +2692,8 @@ def prepInnings(team1, team2):
             print()
             print('     End of {} balls - {} runs'.format(initialBalls,initialScore))
             print('     {}     {}-{}'.format(team1,totalScore,totalWickets))
-            rr = totalScore / ball
+            fBall = ball / 5
+            rr = totalScore / fBall
             print('     RR - {}'.format(round(rr,2)))
             print()
             print('     {}     ({}){}  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
@@ -2600,7 +2713,8 @@ def prepInnings(team1, team2):
                         team2Bowlers[bIndex][3] = team2Bowlers[bIndex][3] + 10
             
             checkBowlers.append(bowlerPresent)
-            changeB = changeBowler(10)
+            if ball != 100:
+                changeB = changeBowler(10, team2Bowlers, oneIngBowl)
             
             initialBalls = 0
             initialDots = 0
@@ -2623,25 +2737,9 @@ def prepInnings(team1, team2):
                     sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'Not Out','', '', onStrikeRuns, onStrikeBalls, 
                onStrikeFours, onStrikeSixes, sr])
-                
-                if ball == 100 and ballOutCome == ['Out']:
-                    offStrikeBalls = offStrikeBalls + 1
-                else:
-                    sr = (offStrikeRuns * 100) // offStrikeBalls
-                
+                sr = (offStrikeRuns * 100) // offStrikeBalls
                 oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
             offStrikeFours, offStrikeSixes, sr])
-    
-    if totalWickets == 10 and ball != 100:
-                print()
-                print('     End of innings')
-                print('     End of {} balls - {} runs'.format(initialBalls,initialScore))
-                print('     {}     {}-{}'.format(team1,totalScore,totalWickets))
-                print()
-                print('     {}     ({}){}  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
-                                                                offStrikeBalls,offStrikeFours,offStrikeSixes))
-                print('     {}     {}-{}-{}-{}'.format(bowlerPresent, oneIngBowl[bSIndex][1], oneIngBowl[bSIndex][2], oneIngBowl[bSIndex][3], oneIngBowl[bSIndex][4]))
-                print()
     
     print('{} 1st Innings'.format(team1))
     
@@ -2658,7 +2756,8 @@ def prepInnings(team1, team2):
     dnb = df['Batsman'].to_list()
     dnb = list(set(team1BattingPlayers) - set(dnb))
     print()
-    rr = totalScore / ball
+    fBall = ball / 5
+    rr = totalScore / fBall
     print('   Total:   {}/{}        Balls: {}        Run Rate: {}        Extras: {}'.format(totalScore,totalWickets,ball,round(rr,2),totalExtras))
     print()
     if len(dnb) == 0:
@@ -2674,6 +2773,7 @@ def prepInnings(team1, team2):
     print('{} Bowling Scoreboard'.format(team2))
     print()
     df1 = pd.DataFrame(oneIngBowl,columns=['Bowler','Balls','Dots','Runs','Wickets','Economy','Extras'])
+    df1['Economy'] = df1['Runs'] / (df1['Balls'] / 5)
     print(tabulate(df1, showindex=False, headers=df1.columns))
     print()
     print('   Total:   {}/{}        Balls: {}        Run Rate: {}        Extras: {}'.format(totalScore,totalWickets,ball,round(rr,2),totalExtras))
@@ -2683,7 +2783,8 @@ def prepInnings(team1, team2):
     df1.to_csv(ballP)
     
     target = totalScore + 1
-    rrr = target / 100
+    fBall = 100 / 5
+    rrr = target / fBall
     print()
     print()
     # print(team2+' need '+str(target)+' runs in 100 balls at '+str(round(rrr,2))+' run/s per ball.')
