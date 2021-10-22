@@ -142,6 +142,14 @@ def checkWinner(team1, team2, target, totalWickets, totalScore, ball):
         print(win)
         print()
         
+    elif totalWickets == 10 and ball != 100:
+        runsWon = team1Score - totalScore
+        win = '{} beat {} by {} runs.'.format(team1, team2, runsWon)
+        win1.append(win)
+        print()
+        print(win)
+        print()
+        
     
 def printSummary():
     print()
@@ -285,8 +293,9 @@ def prepInnings2(team1, team2, target):
                 if team2Bowlers[bIndex][3] == 0 or team2Bowlers[bIndex][3] == 5 or team2Bowlers[bIndex][3] == 10:
                     return changeB
                 elif team2Bowlers[bIndex][3] == 15:
-                    print('Please select a valid bowler.')
-                    return changeBowler(initialBalls, team2Bowlers, oneIngBat)
+                    return changeB
+                    # print('Please select a valid bowler.')
+                    # return changeBowler(initialBalls, team2Bowlers, oneIngBat)
                 
         print('Please select a valid bowler.')
         return changeBowler(initialBalls, team2Bowlers, oneIngBat)
@@ -695,7 +704,7 @@ def prepInnings2(team1, team2, target):
                 totalWickets = totalWickets + 1
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,cPlayer,random.choice(outComm).replace('batsman', onStrike)))
                 print()
-                print('     c. {}     b. {}     {}({}){} [{}x4 {}x6]'.format(cPlayer,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                print('     c. {}     b. {}     {}{}({}) [{}x4 {}x6]'.format(cPlayer,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                 print()
                 sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'c. ',cPlayer, bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -730,7 +739,7 @@ def prepInnings2(team1, team2, target):
                 totalWickets = totalWickets + 1
                 print('Ball {} - {} to {}, {}, {}'.format(ball,bowlerPresent,onStrike,*outType,random.choice(outComm).replace('batsman', onStrike)))
                 print()
-                print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                print('     b. {}     ({}){}{} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                 print()
                 sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'b. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -764,7 +773,7 @@ def prepInnings2(team1, team2, target):
                 totalWickets = totalWickets + 1
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,*keeper,random.choice(outComm).replace('batsman', onStrike)))
                 print()
-                print('     st. {}     b. {}     {}({}){} [{}x4 {}x6]'.format(*keeper,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                print('     st. {}     b. {}     ({}){}{} [{}x4 {}x6]'.format(*keeper,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                 print()
                 sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'st. ',*keeper, bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -799,7 +808,7 @@ def prepInnings2(team1, team2, target):
                 initialWickets = initialWickets - 1
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,cPlayer,random.choice(outComm).replace('batsman', onStrike)))
                 print()
-                print('     ro. {}     b. {}     {}({}){} [{}x4 {}x6]'.format(cPlayer,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                print('     ro. {}     b. {}     ({}){}{} [{}x4 {}x6]'.format(cPlayer,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                 print()
                 sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'ro. ',cPlayer, bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -891,7 +900,7 @@ def prepInnings2(team1, team2, target):
                         
                         print('The umpire gives OUT ! {} departs.'.format(onStrike))
                         print()
-                        print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                        print('     b. {}     {}{}({}) [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                         print()
                         sr = (onStrikeRuns * 100) // onStrikeBalls
                         oneIngBat.append([onStrike, 'lbw. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -927,7 +936,7 @@ def prepInnings2(team1, team2, target):
                 elif reviewYN == ['no']:
                     initialWickets = initialWickets + 1
                     totalWickets = totalWickets + 1
-                    print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                    print('     b. {}     {}{}({}) [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                     print()
                     sr = (onStrikeRuns * 100) // onStrikeBalls
                     oneIngBat.append([onStrike, 'lbw. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -984,7 +993,7 @@ def prepInnings2(team1, team2, target):
                 onStrikeRuns = onStrikeRuns + 1
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, One Run'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, One Run, {}'.format(ball,bowlerPresent,onStrike,random.choice(oneComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = onStrike, offStrike
@@ -1016,7 +1025,7 @@ def prepInnings2(team1, team2, target):
                 onStrikeRuns = onStrikeRuns + 0
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, dot'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, dot, {}'.format(ball,bowlerPresent,onStrike,random.choice(zeroComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -1047,7 +1056,7 @@ def prepInnings2(team1, team2, target):
                 onStrikeRuns = onStrikeRuns + 2
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, Two Runs'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, Two Runs, {}'.format(ball,bowlerPresent,onStrike,random.choice(twoComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -1157,7 +1166,7 @@ def prepInnings2(team1, team2, target):
                 onStrikeRuns = onStrikeRuns + 0
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, dot'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, dot, {}'.format(ball,bowlerPresent,onStrike,random.choice(zeroComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -1188,7 +1197,7 @@ def prepInnings2(team1, team2, target):
                 onStrikeRuns = onStrikeRuns + 2
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, Two Runs'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, Two Runs, {}'.format(ball,bowlerPresent,onStrike,random.choice(twoComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -1220,7 +1229,7 @@ def prepInnings2(team1, team2, target):
                 onStrikeRuns = onStrikeRuns + 4
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, FOUR runs'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, FOUR runs, {}'.format(ball,bowlerPresent,onStrike,random.choice(fourComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -1253,7 +1262,7 @@ def prepInnings2(team1, team2, target):
                 onStrikeRuns = onStrikeRuns + 6
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, SIX !'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, SIX !, {}'.format(ball,bowlerPresent,onStrike,random.choice(sixComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -1294,6 +1303,8 @@ def prepInnings2(team1, team2, target):
                     break
             
             if chB == 'no':
+                print('{} continue his spell'.format(bowlerPresent))
+                print()
                 pass
             elif chB == 'yes':
                 for i in oneIngBowl:
@@ -1318,13 +1329,17 @@ def prepInnings2(team1, team2, target):
                 fBall = ball / 5
                 rr = totalScore / fBall
                 rrr = (target - totalScore) / (100-ball)
-                print('     RR - {}     RRR- {}'.format(round(rr,2),round(rrr,2)))
+                print('     RR - {}'.format(round(rr,2)))
                 print()
-                print('     {}     ({}){}  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
+                print('     {}     {}({})  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
                                                               onStrikeBalls,onStrikeFours,onStrikeSixes))
-                print('     {}     ({}){}  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
+                print('     {}     {}({})  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
                                                             offStrikeBalls,offStrikeFours,offStrikeSixes))
                 print('     {}     {}-{}-{}-{}'.format(bowlerPresent, oneIngBowl[bSIndex][1], oneIngBowl[bSIndex][2], oneIngBowl[bSIndex][3], oneIngBowl[bSIndex][4]))
+                print()
+                remaningBalls = 100 - ball
+                needRuns = target - totalScore
+                print('{} needs {} runs from {} balls'.format(team1,needRuns,remaningBalls))
                 print()
                 
                 flag = True
@@ -1368,13 +1383,17 @@ def prepInnings2(team1, team2, target):
             else:
                 rrr = (target - totalScore) / (100-fBall)
                 
-            print('     RR - {}     RRR - {}'.format(round(rr,2),round(rrr,2)))
+            print('     RR - {}'.format(round(rr,2)))
             print()
-            print('     {}     ({}){}  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
+            print('     {}     {}({})  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
                                                              onStrikeBalls,onStrikeFours,onStrikeSixes))
-            print('     {}     ({}){}  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
+            print('     {}     {}({})  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
                                                             offStrikeBalls,offStrikeFours,offStrikeSixes))
             print('     {}     {}-{}-{}-{}'.format(bowlerPresent, oneIngBowl[bSIndex][1], oneIngBowl[bSIndex][2], oneIngBowl[bSIndex][3], oneIngBowl[bSIndex][4]))
+            print()
+            remaningBalls = 100 - ball
+            needRuns = target - totalScore
+            print('{} needs {} runs from {} balls'.format(team1,needRuns,remaningBalls))
             print()
             
             # print()
@@ -1432,15 +1451,25 @@ def prepInnings2(team1, team2, target):
                 sr = (offStrikeRuns * 100) // offStrikeBalls
                 oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
             offStrikeFours, offStrikeSixes, sr])
+                
+                for i in oneIngBowl:
+                    if bowlerPresent == i[0]:
+                        bSIndex = oneIngBowl.index(i)
+                        oneIngBowl[bSIndex][1] = oneIngBowl[bSIndex][1] + initialBalls
+                        oneIngBowl[bSIndex][2] = oneIngBowl[bSIndex][2] + initialDots
+                        oneIngBowl[bSIndex][3] = oneIngBowl[bSIndex][3] + initialScore
+                        oneIngBowl[bSIndex][4] = oneIngBowl[bSIndex][4] + initialWickets
+                        oneIngBowl[bSIndex][5] = round(oneIngBowl[bSIndex][3]/oneIngBowl[bSIndex][1],2)
+                        oneIngBowl[bSIndex][6] = oneIngBowl[bSIndex][6] + initialExtras
             
             if totalWickets != 10 and ball != 100:
                 print()
                 print('     End of {} balls - {} runs'.format(initialBalls,initialScore))
                 print('     {}     {}-{}'.format(team1,totalScore,totalWickets))
                 print()
-                print('     {}     ({}){}  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
+                print('     {}     {}({})  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
                                                                  onStrikeBalls,onStrikeFours,onStrikeSixes))
-                print('     {}     ({}){}  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
+                print('     {}     {}({})  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
                                                                 offStrikeBalls,offStrikeFours,offStrikeSixes))
                 print('     {}     {}-{}-{}-{}'.format(bowlerPresent, oneIngBowl[bSIndex][1], oneIngBowl[bSIndex][2], oneIngBowl[bSIndex][3], oneIngBowl[bSIndex][4]))
                 print()
@@ -1619,8 +1648,9 @@ def prepInnings(team1, team2):
                 if team2Bowlers[bIndex][3] == 0 or team2Bowlers[bIndex][3] == 5 or team2Bowlers[bIndex][3] == 10:
                     return changeB
                 elif team2Bowlers[bIndex][3] == 15:
-                    print('Please select a valid bowler.')
-                    return changeBowler(initialBalls, team2Bowlers, oneIngBat)
+                    return changeB
+                    # print('Please select a valid bowler.')
+                    # return changeBowler(initialBalls, team2Bowlers, oneIngBat)
                 
         print('Please select a valid bowler.')
         return changeBowler(initialBalls, team2Bowlers, oneIngBat)
@@ -2029,7 +2059,7 @@ def prepInnings(team1, team2):
                 totalWickets = totalWickets + 1
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,cPlayer,random.choice(outComm).replace('batsman', onStrike)))
                 print()
-                print('     c. {}     b. {}     {}({}){} [{}x4 {}x6]'.format(cPlayer,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                print('     c. {}     b. {}     {}{}({}) [{}x4 {}x6]'.format(cPlayer,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                 print()
                 sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'c. ',cPlayer, bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -2064,7 +2094,7 @@ def prepInnings(team1, team2):
                 totalWickets = totalWickets + 1
                 print('Ball {} - {} to {}, {}, {}'.format(ball,bowlerPresent,onStrike,*outType,random.choice(outComm).replace('batsman', onStrike)))
                 print()
-                print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                print('     b. {}     {}{}({}) [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                 print()
                 sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'b. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -2098,7 +2128,7 @@ def prepInnings(team1, team2):
                 totalWickets = totalWickets + 1
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,*keeper,random.choice(outComm).replace('batsman', onStrike)))
                 print()
-                print('     st. {}     b. {}     {}({}){} [{}x4 {}x6]'.format(*keeper,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                print('     st. {}     b. {}     {}{}({}) [{}x4 {}x6]'.format(*keeper,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                 print()
                 sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'st. ',*keeper, bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -2133,7 +2163,7 @@ def prepInnings(team1, team2):
                 initialWickets = initialWickets - 1
                 print('Ball {} - {} to {}, {} by {}, {}'.format(ball,bowlerPresent,onStrike,*outType,cPlayer,random.choice(outComm).replace('batsman', onStrike)))
                 print()
-                print('     ro. {}     b. {}     {}({}){} [{}x4 {}x6]'.format(cPlayer,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                print('     ro. {}     b. {}     {}{}({}) [{}x4 {}x6]'.format(cPlayer,bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                 print()
                 sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'ro. ',cPlayer, bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -2167,7 +2197,7 @@ def prepInnings(team1, team2):
                 totalWickets = totalWickets + 1
                 print('Ball {} - {} to {}, {}, {}'.format(ball,bowlerPresent,onStrike,*outType,random.choice(outComm).replace('batsman', onStrike)))
                 print()
-                print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                print('     b. {}     {}{}({}) [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                 print()
                 sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'hw. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -2225,7 +2255,7 @@ def prepInnings(team1, team2):
                         
                         print('The umpire gives OUT ! {} departs.'.format(onStrike))
                         print()
-                        print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                        print('     b. {}     {}{}({}) [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                         print()
                         sr = (onStrikeRuns * 100) // onStrikeBalls
                         oneIngBat.append([onStrike, 'lbw. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -2261,7 +2291,7 @@ def prepInnings(team1, team2):
                 elif reviewYN == ['no']:
                     initialWickets = initialWickets + 1
                     totalWickets = totalWickets + 1
-                    print('     b. {}     {}({}){} [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
+                    print('     b. {}     {}{}({}) [{}x4 {}x6]'.format(bowlerPresent,onStrike,onStrikeRuns,onStrikeBalls,onStrikeFours,onStrikeSixes))
                     print()
                     sr = (onStrikeRuns * 100) // onStrikeBalls
                     oneIngBat.append([onStrike, 'lbw. ','', bowlerPresent, onStrikeRuns, onStrikeBalls, 
@@ -2318,7 +2348,7 @@ def prepInnings(team1, team2):
                 onStrikeRuns = onStrikeRuns + 1
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, One Run'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, One Run, {}'.format(ball,bowlerPresent,onStrike, random.choice(oneComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = onStrike, offStrike
@@ -2350,7 +2380,7 @@ def prepInnings(team1, team2):
                 onStrikeRuns = onStrikeRuns + 0
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, dot'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, dot, {}'.format(ball,bowlerPresent,onStrike, random.choice(zeroComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -2381,7 +2411,7 @@ def prepInnings(team1, team2):
                 onStrikeRuns = onStrikeRuns + 2
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, Two Runs'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, Two Runs, {}'.format(ball,bowlerPresent,onStrike,random.choice(twoComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -2460,7 +2490,7 @@ def prepInnings(team1, team2):
                 onStrikeRuns = onStrikeRuns + 1
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, One Run'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, One Run, {}'.format(ball,bowlerPresent,onStrike, random.choice(oneComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = onStrike, offStrike
@@ -2491,7 +2521,7 @@ def prepInnings(team1, team2):
                 onStrikeRuns = onStrikeRuns + 0
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, dot'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, dot, {}'.format(ball,bowlerPresent,onStrike, random.choice(zeroComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -2522,7 +2552,7 @@ def prepInnings(team1, team2):
                 onStrikeRuns = onStrikeRuns + 2
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, Two Runs'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, Two Runs, {}'.format(ball,bowlerPresent,onStrike, random.choice(twoComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -2554,7 +2584,7 @@ def prepInnings(team1, team2):
                 onStrikeRuns = onStrikeRuns + 4
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, FOUR runs'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, FOUR runs, {}'.format(ball,bowlerPresent,onStrike, random.choice(fourComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -2587,7 +2617,7 @@ def prepInnings(team1, team2):
                 onStrikeRuns = onStrikeRuns + 6
                 onStrikeBalls = onStrikeBalls + 1
                 
-                print('Ball {} - {} to {}, SIX !'.format(ball,bowlerPresent,onStrike))
+                print('Ball {} - {} to {}, SIX !, {}'.format(ball,bowlerPresent,onStrike, random.choice(sixComm)))
                 
                 if ball % 10 == 0:
                     onStrike, offStrike = offStrike, onStrike
@@ -2628,6 +2658,8 @@ def prepInnings(team1, team2):
                     break
             
             if chB == 'no':
+                print('{} continue his spell'.format(bowlerPresent))
+                print()
                 pass
             elif chB == 'yes':
                 for i in oneIngBowl:
@@ -2653,9 +2685,9 @@ def prepInnings(team1, team2):
                 rr = totalScore / fBall
                 print('     RR - {}'.format(round(rr,2)))
                 print()
-                print('     {}     ({}){}  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
+                print('     {}     {}({})  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
                                                               onStrikeBalls,onStrikeFours,onStrikeSixes))
-                print('     {}     ({}){}  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
+                print('     {}     {}({})  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
                                                             offStrikeBalls,offStrikeFours,offStrikeSixes))
                 print('     {}     {}-{}-{}-{}'.format(bowlerPresent, oneIngBowl[bSIndex][1], oneIngBowl[bSIndex][2], oneIngBowl[bSIndex][3], oneIngBowl[bSIndex][4]))
                 print()
@@ -2696,9 +2728,9 @@ def prepInnings(team1, team2):
             rr = totalScore / fBall
             print('     RR - {}'.format(round(rr,2)))
             print()
-            print('     {}     ({}){}  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
+            print('     {}     {}({})  [{}x4, {}x6]'.format(onStrike,onStrikeRuns,
                                                              onStrikeBalls,onStrikeFours,onStrikeSixes))
-            print('     {}     ({}){}  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
+            print('     {}     {}({})  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
                                                             offStrikeBalls,offStrikeFours,offStrikeSixes))
             print('     {}     {}-{}-{}-{}'.format(bowlerPresent, oneIngBowl[bSIndex][1], oneIngBowl[bSIndex][2], oneIngBowl[bSIndex][3], oneIngBowl[bSIndex][4]))
             print()
@@ -2737,9 +2769,43 @@ def prepInnings(team1, team2):
                     sr = (onStrikeRuns * 100) // onStrikeBalls
                 oneIngBat.append([onStrike, 'Not Out','', '', onStrikeRuns, onStrikeBalls, 
                onStrikeFours, onStrikeSixes, sr])
+                
+                if ball == 100 and ballOutCome == ['Out']:
+                    offStrikeBalls = offStrikeBalls + 0
+                    sr = 0
+                else:
+                    sr = (offStrikeRuns * 100) // offStrikeBalls
+                
+                # sr = (offStrikeRuns * 100) // offStrikeBalls
+                oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
+            offStrikeFours, offStrikeSixes, sr])
+                
+        if totalWickets == 10:
+                
                 sr = (offStrikeRuns * 100) // offStrikeBalls
                 oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
             offStrikeFours, offStrikeSixes, sr])
+                
+                for i in oneIngBowl:
+                    if bowlerPresent == i[0]:
+                        bSIndex = oneIngBowl.index(i)
+                        oneIngBowl[bSIndex][1] = oneIngBowl[bSIndex][1] + initialBalls
+                        oneIngBowl[bSIndex][2] = oneIngBowl[bSIndex][2] + initialDots
+                        oneIngBowl[bSIndex][3] = oneIngBowl[bSIndex][3] + initialScore
+                        oneIngBowl[bSIndex][4] = oneIngBowl[bSIndex][4] + initialWickets
+                        oneIngBowl[bSIndex][5] = round(oneIngBowl[bSIndex][3]/oneIngBowl[bSIndex][1],2)
+                        oneIngBowl[bSIndex][6] = oneIngBowl[bSIndex][6] + initialExtras
+    
+        if totalWickets == 10 and ball != 100:
+                    print()
+                    print('     End of innings')
+                    print('     End of {} balls - {} runs'.format(initialBalls,initialScore))
+                    print('     {}     {}-{}'.format(team1,totalScore,totalWickets))
+                    print()
+                    print('     {}     {}({})  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
+                                                                    offStrikeBalls,offStrikeFours,offStrikeSixes))
+                    print('     {}     {}-{}-{}-{}'.format(bowlerPresent, oneIngBowl[bSIndex][1], oneIngBowl[bSIndex][2], oneIngBowl[bSIndex][3], oneIngBowl[bSIndex][4]))
+                    print()  
     
     print('{} 1st Innings'.format(team1))
     
@@ -2788,7 +2854,7 @@ def prepInnings(team1, team2):
     print()
     print()
     # print(team2+' need '+str(target)+' runs in 100 balls at '+str(round(rrr,2))+' run/s per ball.')
-    print('{} need {} runs in 100 balls at {} run/s per ball !'.format(team2,target,round(rrr,2)))
+    print('{} need {} runs in 100 balls at {} run/s per 5 balls !'.format(team2,target,round(rrr,2)))
     print()
     print()
     

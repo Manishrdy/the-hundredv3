@@ -142,6 +142,14 @@ def checkWinner(team1, team2, target, totalWickets, totalScore, ball):
         print(win)
         print()
         
+    elif totalWickets == 10 and ball != 100:
+        runsWon = team1Score - totalScore
+        win = '{} beat {} by {} runs.'.format(team1, team2, runsWon)
+        win1.append(win)
+        print()
+        print(win)
+        print()
+        
     
 def printSummary():
     print()
@@ -182,7 +190,7 @@ def prepInnings2(team1, team2, target):
     team2Bowlers = team2Bowlers.values.tolist()
     for i in team2Bowlers:
         i.extend([0])
-    print(team2Bowlers)
+
     initialBalls = 0
     
     initialScore = 0
@@ -265,8 +273,9 @@ def prepInnings2(team1, team2, target):
                 if team2Bowlers[bIndex][3] == 0 or team2Bowlers[bIndex][3] == 5 or team2Bowlers[bIndex][3] == 10:
                     return changeB
                 elif team2Bowlers[bIndex][3] == 15:
-                    print('Please select a valid bowler.')
-                    return changeBowler(initialBalls, team2Bowlers, oneIngBat)
+                    return changeB
+                    # print('Please select a valid bowler.')
+                    # return changeBowler(initialBalls, team2Bowlers, oneIngBat)
                 
         print('Please select a valid bowler.')
         return changeBowler(initialBalls, team2Bowlers, oneIngBat)
@@ -1411,6 +1420,16 @@ def prepInnings2(team1, team2, target):
                 sr = (offStrikeRuns * 100) // offStrikeBalls
                 oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
             offStrikeFours, offStrikeSixes, sr])
+                
+                for i in oneIngBowl:
+                    if bowlerPresent == i[0]:
+                        bSIndex = oneIngBowl.index(i)
+                        oneIngBowl[bSIndex][1] = oneIngBowl[bSIndex][1] + initialBalls
+                        oneIngBowl[bSIndex][2] = oneIngBowl[bSIndex][2] + initialDots
+                        oneIngBowl[bSIndex][3] = oneIngBowl[bSIndex][3] + initialScore
+                        oneIngBowl[bSIndex][4] = oneIngBowl[bSIndex][4] + initialWickets
+                        oneIngBowl[bSIndex][5] = round(oneIngBowl[bSIndex][3]/oneIngBowl[bSIndex][1],2)
+                        oneIngBowl[bSIndex][6] = oneIngBowl[bSIndex][6] + initialExtras
             
             if totalWickets != 10 and ball != 100:
                 print()
@@ -1515,7 +1534,6 @@ def prepInnings(team1, team2):
     for i in team2Bowlers:
         i.extend([0])
     
-    print(team2Bowlers)
     
     initialBalls = 0
     
@@ -1599,8 +1617,9 @@ def prepInnings(team1, team2):
                 if team2Bowlers[bIndex][3] == 0 or team2Bowlers[bIndex][3] == 5 or team2Bowlers[bIndex][3] == 10:
                     return changeB
                 elif team2Bowlers[bIndex][3] == 15:
-                    print('Please select a valid bowler.')
-                    return changeBowler(initialBalls, team2Bowlers, oneIngBat)
+                    return changeB
+                    # print('Please select a valid bowler.')
+                    # return changeBowler(initialBalls, team2Bowlers, oneIngBat)
                 
         print('Please select a valid bowler.')
         return changeBowler(initialBalls, team2Bowlers, oneIngBat)
@@ -2723,7 +2742,35 @@ def prepInnings(team1, team2):
                 oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
             offStrikeFours, offStrikeSixes, sr])
     
+        if totalWickets == 10:
+                
+                sr = (offStrikeRuns * 100) // offStrikeBalls
+                oneIngBat.append([offStrike, 'Not Out','', '', offStrikeRuns, offStrikeBalls, 
+            offStrikeFours, offStrikeSixes, sr])
+                
+                for i in oneIngBowl:
+                    if bowlerPresent == i[0]:
+                        bSIndex = oneIngBowl.index(i)
+                        oneIngBowl[bSIndex][1] = oneIngBowl[bSIndex][1] + initialBalls
+                        oneIngBowl[bSIndex][2] = oneIngBowl[bSIndex][2] + initialDots
+                        oneIngBowl[bSIndex][3] = oneIngBowl[bSIndex][3] + initialScore
+                        oneIngBowl[bSIndex][4] = oneIngBowl[bSIndex][4] + initialWickets
+                        oneIngBowl[bSIndex][5] = round(oneIngBowl[bSIndex][3]/oneIngBowl[bSIndex][1],2)
+                        oneIngBowl[bSIndex][6] = oneIngBowl[bSIndex][6] + initialExtras
+    
+        if totalWickets == 10 and ball != 100:
+                    print()
+                    print('     End of innings')
+                    print('     End of {} balls - {} runs'.format(initialBalls,initialScore))
+                    print('     {}     {}-{}'.format(team1,totalScore,totalWickets))
+                    print()
+                    print('     {}     ({}){}  [{}x4, {}x6]'.format(offStrike,offStrikeRuns,
+                                                                    offStrikeBalls,offStrikeFours,offStrikeSixes))
+                    print('     {}     {}-{}-{}-{}'.format(bowlerPresent, oneIngBowl[bSIndex][1], oneIngBowl[bSIndex][2], oneIngBowl[bSIndex][3], oneIngBowl[bSIndex][4]))
+                    print()
+    
     print('{} 1st Innings'.format(team1))
+
     
     for i in range(len(team1BattingPlayers)):
         j = i
